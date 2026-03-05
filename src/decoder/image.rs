@@ -514,6 +514,7 @@ impl Image {
                 // returning a `Gray` color, i.e. matching on `photometric_samples` instead.
                 match self.samples {
                     1 => Ok(ColorType::Gray(self.bits_per_sample)),
+                    2 => Ok(ColorType::GrayA(self.bits_per_sample)),
                     _ => Ok(ColorType::Multiband {
                         bit_depth: self.bits_per_sample,
                         num_samples: self.samples,
@@ -956,6 +957,7 @@ impl Image {
             | ColorType::CMYKA(n)
             | ColorType::YCbCr(n)
             | ColorType::Gray(n)
+            | ColorType::GrayA(n)
             | ColorType::Multiband {
                 bit_depth: n,
                 num_samples: _,

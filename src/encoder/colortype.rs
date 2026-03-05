@@ -251,6 +251,117 @@ impl ColorType for Gray64Float {
         fp_predict_f64(row, Self::SAMPLE_FORMAT.len(), result)
     }
 }
+pub struct GrayA8;
+impl ColorType for GrayA8 {
+    type Inner = u8;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[8, 8];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Uint; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayAI8;
+impl ColorType for GrayAI8 {
+    type Inner = i8;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[8, 8];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Int; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayA16;
+impl ColorType for GrayA16 {
+    type Inner = u16;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[16, 16];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Uint; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayAI16;
+impl ColorType for GrayAI16 {
+    type Inner = i16;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[16, 16];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Int; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayA32;
+impl ColorType for GrayA32 {
+    type Inner = u32;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[32, 32];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Uint; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayAI32;
+impl ColorType for GrayAI32 {
+    type Inner = i32;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[32, 32];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Int; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayA32Float;
+impl ColorType for GrayA32Float {
+    type Inner = f32;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[32, 32];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::IEEEFP; 2];
+
+    fn horizontal_predict(_: &[Self::Inner], _: &mut Vec<Self::Inner>) {
+        unreachable!("horizontal predictor is not valid for floating-point sample types")
+    }
+
+    fn floating_point_predict(row: &[Self::Inner], result: &mut Vec<u8>) {
+        fp_predict_f32(row, Self::SAMPLE_FORMAT.len(), result)
+    }
+}
+
+pub struct GrayA64;
+impl ColorType for GrayA64 {
+    type Inner = u64;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[64, 64];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Uint; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayAI64;
+impl ColorType for GrayAI64 {
+    type Inner = i64;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[64, 64];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::Int; 2];
+
+    integer_horizontal_predict!();
+}
+
+pub struct GrayA64Float;
+impl ColorType for GrayA64Float {
+    type Inner = f64;
+    const TIFF_VALUE: PhotometricInterpretation = PhotometricInterpretation::BlackIsZero;
+    const BITS_PER_SAMPLE: &'static [u16] = &[64, 64];
+    const SAMPLE_FORMAT: &'static [SampleFormat] = &[SampleFormat::IEEEFP; 2];
+
+    fn horizontal_predict(_: &[Self::Inner], _: &mut Vec<Self::Inner>) {
+        unreachable!("horizontal predictor is not valid for floating-point sample types")
+    }
+
+    fn floating_point_predict(row: &[Self::Inner], result: &mut Vec<u8>) {
+        fp_predict_f64(row, Self::SAMPLE_FORMAT.len(), result)
+    }
+}
 
 pub struct RGB8;
 impl ColorType for RGB8 {

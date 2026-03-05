@@ -206,16 +206,25 @@ fn issue_69() {
     test_image_sum_u16("issue_69_packbits.tiff", ColorType::Gray(16), 1015486);
 }
 
-// TODO: GrayA support
-//#[test]
-//fn test_gray_alpha_u8()
-//{
-//let img_file = File::open("./tests/images/minisblack-2c-8b-alpha.tiff").expect("Cannot find test image!");
-//let mut decoder = Decoder::new(img_file).expect("Cannot create decoder");
-//assert_eq!(decoder.colortype().unwrap(), ColorType::GrayA(8));
-//let img_res = decoder.read_image();
-//assert!(img_res.is_ok());
-//}
+#[test]
+fn test_gray_alpha_u8() {
+    let img_file =
+        File::open("./tests/images/minisblack-2c-8b-alpha.tiff").expect("Cannot find test image!");
+    let mut decoder = Decoder::new(img_file).expect("Cannot create decoder");
+    assert_eq!(decoder.colortype().unwrap(), ColorType::GrayA(8));
+    let img_res = decoder.read_image();
+    assert!(img_res.is_ok());
+}
+
+#[test]
+fn test_gray_alpha_miniswhite_u8() {
+    let img_file =
+        File::open("./tests/images/miniswhite-2c-8b-alpha.tiff").expect("Cannot find test image!");
+    let mut decoder = Decoder::new(img_file).expect("Cannot create decoder");
+    assert_eq!(decoder.colortype().unwrap(), ColorType::GrayA(8));
+    let img_res = decoder.read_image();
+    assert!(img_res.is_ok());
+}
 
 #[test]
 fn test_tiled_gray_i1() {
@@ -706,14 +715,7 @@ fn write_extra_bits_image() {
 
 #[test]
 fn extra_bits_gray() {
-    test_image_sum_u8(
-        "extra_bits_gray_8b.tiff",
-        ColorType::Multiband {
-            bit_depth: 8,
-            num_samples: 2,
-        },
-        64,
-    );
+    test_image_sum_u8("extra_bits_gray_8b.tiff", ColorType::GrayA(8), 64);
 }
 
 #[test]

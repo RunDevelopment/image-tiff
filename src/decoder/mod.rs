@@ -742,6 +742,57 @@ fn invert_colors(
                 *x = (1.0 - v).to_ne_bytes();
             }
         }
+
+        (ColorType::GrayA(8), SampleFormat::Uint) => {
+            let pixels = buf.as_chunks_mut::<2>().0;
+            for p in pixels {
+                p[0] = !p[0];
+            }
+        }
+        (ColorType::GrayA(16), SampleFormat::Uint) => {
+            let pixels = buf.as_chunks_mut::<4>().0;
+            for p in pixels {
+                p[0] = !p[0];
+                p[1] = !p[1];
+            }
+        }
+        (ColorType::GrayA(32), SampleFormat::Uint) => {
+            let pixels = buf.as_chunks_mut::<8>().0;
+            for p in pixels {
+                p[0] = !p[0];
+                p[1] = !p[1];
+                p[2] = !p[2];
+                p[3] = !p[3];
+            }
+        }
+        (ColorType::GrayA(64), SampleFormat::Uint) => {
+            let pixels = buf.as_chunks_mut::<16>().0;
+            for p in pixels {
+                p[0] = !p[0];
+                p[1] = !p[1];
+                p[2] = !p[2];
+                p[3] = !p[3];
+                p[4] = !p[4];
+                p[5] = !p[5];
+                p[6] = !p[6];
+                p[7] = !p[7];
+            }
+        }
+        (ColorType::GrayA(32), SampleFormat::IEEEFP) => {
+            let pixels = buf.as_chunks_mut::<8>().0;
+            for p in pixels {
+                let gray = &mut p.as_chunks_mut::<4>().0[0];
+                *gray = (1.0 - f32::from_ne_bytes(*gray)).to_ne_bytes();
+            }
+        }
+        (ColorType::GrayA(64), SampleFormat::IEEEFP) => {
+            let pixels = buf.as_chunks_mut::<16>().0;
+            for p in pixels {
+                let gray = &mut p.as_chunks_mut::<8>().0[0];
+                *gray = (1.0 - f64::from_ne_bytes(*gray)).to_ne_bytes();
+            }
+        }
+
         _ => {
             return Err(TiffError::UnsupportedError(
                 TiffUnsupportedError::UnknownInterpretation,

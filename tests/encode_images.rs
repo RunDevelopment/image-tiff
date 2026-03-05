@@ -300,6 +300,16 @@ fn test_gray_i8_roundtrip() {
 }
 
 #[test]
+fn test_gray_alpha_u8_roundtrip() {
+    test_u8_roundtrip::<colortype::GrayA8>("minisblack-2c-8b-alpha.tiff", ColorType::GrayA(8));
+}
+
+#[test]
+fn test_gray_minwhite_alpha_u8_roundtrip() {
+    test_u8_roundtrip::<colortype::GrayA8>("miniswhite-2c-8b-alpha.tiff", ColorType::GrayA(8));
+}
+
+#[test]
 fn test_rgb_u8_roundtrip() {
     test_u8_roundtrip::<colortype::RGB8>("rgb-3c-8b.tiff", ColorType::RGB(8));
 }
